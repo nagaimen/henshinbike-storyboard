@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief — henshinbike GW Brand Movie</title>
+<style>
+  :root {
+    --bg: #0D0D0B;
+    --bg2: #131311;
+    --ivory: #F2EDE4;
+    --dim: rgba(242,237,228,0.45);
+    --faint: rgba(242,237,228,0.06);
+    --border: rgba(242,237,228,0.1);
+    --gold: #E8FF4A;
+    --sage: #4ECDC4;
+    --coral: #E8855A;
+    --warm: #FFD166;
+    --green: #A8E6CF;
+  }
+
+  @page {
+    size: 338mm 190mm;
+    margin: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ivory);
+  }
+
+  /* ── Slide ── */
+  .slide {
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+    max-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5% 7%;
+    position: relative;
+    overflow: hidden;
+    break-after: page;
+    background: var(--bg);
+  }
+
+  /* ── Page number ── */
+  .slide::after {
+    content: attr(data-page);
+    position: absolute;
+    bottom: 3.5%;
+    right: 5%;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--dim);
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 3.5%;
+    left: 7%;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(242,237,228,0.2);
+  }
+
+  /* ── Typography ── */
+  .slide-label {
+    font-size: clamp(12px, 0.95vw, 15px);
+    letter-spacing: 0.25em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2vh;
+  }
+
+  .slide-title {
+    font-size: clamp(24px, 2.6vw, 40px);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 2vh;
+  }
+
+  .slide-sub {
+    font-size: clamp(12px, 0.95vw, 15px);
+    color: var(--dim);
+    line-height: 1.7;
+    max-width: 60%;
+  }
+
+  /* ── Cover ── */
+  .cover { justify-content: flex-end; padding-bottom: 8%; }
+
+  .cover .cover-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 2vh;
+  }
+
+  .pill {
+    font-size: clamp(9px, 0.7vw, 11px);
+    letter-spacing: 0.1em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  .pill.gold { border-color: var(--gold); color: var(--gold); }
+  .pill.sage { border-color: var(--sage); color: var(--sage); }
+
+  .cover-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--sage) 50%, var(--coral) 100%);
+  }
+
+  .cover-concept {
+    font-size: clamp(12px, 1vw, 16px);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-top: 1.5vh;
+  }
+
+  /* ── Grid layouts ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(12px, 1.5vw, 24px);
+    margin-top: 2vh;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: clamp(10px, 1.2vw, 20px);
+    margin-top: 2vh;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: clamp(14px, 1.5vw, 24px);
+  }
+
+  .card h4 {
+    font-size: clamp(9px, 0.7vw, 11px);
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2vh;
+  }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.4vh 0;
+    border-bottom: 1px solid var(--faint);
+    font-size: clamp(12px, 0.95vw, 15px);
+    line-height: 1.6;
+  }
+  .card-row:last-child { border-bottom: none; }
+
+  .card-key { color: var(--dim); font-size: clamp(12px, 0.95vw, 15px); flex-shrink: 0; margin-right: 12px; }
+  .card-val { text-align: right; }
+  .card-val.gold { color: var(--gold); }
+  .card-val.sage { color: var(--sage); }
+
+  /* ── Scope ── */
+  .scope-box {
+    border-radius: 10px;
+    padding: clamp(14px, 1.5vw, 24px);
+  }
+
+  .scope-in {
+    background: rgba(78,205,196,0.04);
+    border: 1px solid rgba(78,205,196,0.2);
+  }
+
+  .scope-out {
+    background: rgba(242,237,228,0.02);
+    border: 1px solid var(--border);
+  }
+
+  .scope-box h4 {
+    font-size: clamp(9px, 0.7vw, 11px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1vh;
+  }
+
+  .scope-in h4 { color: var(--sage); }
+  .scope-out h4 { color: var(--dim); }
+
+  .scope-list {
+    list-style: none;
+    font-size: clamp(12px, 0.95vw, 15px);
+    line-height: 2;
+  }
+
+  .scope-in .scope-list li::before { content: '+ '; color: var(--sage); font-weight: 700; }
+  .scope-out .scope-list li::before { content: '- '; color: var(--dim); }
+  .scope-out .scope-list li { color: var(--dim); }
+
+  /* ── Schedule ── */
+  .sched-row {
+    display: grid;
+    grid-template-columns: clamp(70px, 7vw, 100px) 1fr;
+    gap: 1px;
+    margin-bottom: 1px;
+  }
+
+  .sched-date {
+    background: var(--bg2);
+    padding: clamp(8px, 0.8vw, 14px) clamp(10px, 1vw, 16px);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 700;
+    border-left: 3px solid var(--gold);
+  }
+
+  .sched-date .day {
+    font-size: clamp(9px, 0.7vw, 11px);
+    color: var(--dim);
+    font-weight: 400;
+  }
+
+  .sched-content {
+    background: var(--bg2);
+    padding: clamp(8px, 0.8vw, 14px) clamp(12px, 1.2vw, 20px);
+    font-size: clamp(12px, 0.95vw, 15px);
+    line-height: 1.7;
+    color: var(--dim);
+  }
+
+  .sched-content strong { color: var(--ivory); }
+
+  .sched-row.shoot .sched-date { border-left-color: var(--coral); }
+  .sched-row.shoot .sched-content { color: var(--ivory); }
+  .sched-row.tbd .sched-date { border-left-color: var(--dim); border-left-style: dashed; }
+
+  .shoot-badge {
+    display: inline-block;
+    font-size: clamp(10px, 0.75vw, 12px);
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(232,133,90,0.15);
+    color: var(--coral);
+    letter-spacing: 0.06em;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── Collab ── */
+  .collab-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1vw, 16px);
+    padding: clamp(8px, 0.7vw, 12px) 0;
+    border-bottom: 1px solid var(--faint);
+  }
+  .collab-row:last-child { border-bottom: none; }
+
+  .collab-avatar {
+    width: clamp(28px, 2.5vw, 40px);
+    height: clamp(28px, 2.5vw, 40px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(12px, 1vw, 16px);
+    flex-shrink: 0;
+  }
+
+  .collab-name {
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 600;
+  }
+
+  .collab-role {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--dim);
+    line-height: 1.5;
+  }
+
+  .collab-status {
+    font-size: clamp(8px, 0.55vw, 10px);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ── Moon ── */
+  .moon-card {
+    background: linear-gradient(135deg, #0a0f1a 0%, #111827 100%);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 14px;
+    padding: clamp(16px, 1.8vw, 28px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .moon-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+  }
+
+  .moon-card h3 {
+    font-size: clamp(15px, 1.2vw, 19px);
+    font-weight: 700;
+    margin-bottom: 1vh;
+    color: #FFD700;
+  }
+
+  .moon-card p {
+    font-size: clamp(10px, 0.75vw, 12px);
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .moon-tags { display: flex; gap: 6px; margin-top: 1.5vh; flex-wrap: wrap; }
+
+  .moon-tag {
+    font-size: clamp(10px, 0.75vw, 12px);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,215,0,0.3);
+    color: rgba(255,215,0,0.7);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Estimate ── */
+  .est-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(8px, 0.8vw, 14px) clamp(12px, 1.2vw, 20px);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+
+  .est-label {
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 600;
+  }
+
+  .est-desc {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--dim);
+    margin-top: 2px;
+  }
+
+  .est-amount {
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+
+  .est-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(14px, 1.4vw, 24px) clamp(16px, 1.6vw, 28px);
+    background: rgba(232,255,74,0.04);
+    border: 1px solid rgba(232,255,74,0.2);
+    border-radius: 12px;
+    margin-top: 8px;
+  }
+
+  .est-total-label {
+    font-size: clamp(12px, 0.95vw, 15px);
+    letter-spacing: 0.15em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .est-total-amount {
+    font-size: clamp(22px, 2vw, 32px);
+    font-weight: 700;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .est-total-tax {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--dim);
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  /* ── Workflow ── */
+  .wf-steps {
+    display: flex;
+    gap: 2px;
+    margin-top: 2vh;
+  }
+
+  .wf-step {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: clamp(10px, 1vw, 16px) clamp(8px, 0.8vw, 14px);
+    text-align: center;
+  }
+
+  .wf-step-num {
+    font-size: clamp(8px, 0.55vw, 9px);
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.6vh;
+  }
+
+  .wf-step-title {
+    font-size: clamp(15px, 1.3vw, 20px);
+    font-weight: 600;
+    margin-bottom: 0.4vh;
+    line-height: 1.4;
+  }
+
+  .wf-step-desc {
+    font-size: clamp(8px, 0.55vw, 10px);
+    color: var(--dim);
+    line-height: 1.5;
+  }
+
+  .wf-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--dim);
+    font-size: clamp(10px, 0.8vw, 14px);
+    padding: 0 2px;
+  }
+
+  /* ── Note ── */
+  .note-box {
+    margin-top: 2vh;
+    padding: clamp(12px, 1.2vw, 20px);
+    background: rgba(232,255,74,0.03);
+    border: 1px solid rgba(232,255,74,0.1);
+    border-radius: 10px;
+    font-size: clamp(9px, 0.7vw, 12px);
+    color: var(--dim);
+    line-height: 1.9;
+  }
+
+  .note-box strong { color: var(--gold); }
+
+  /* ── Action items ── */
+  .action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: clamp(10px, 1vw, 16px);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: clamp(12px, 0.95vw, 15px);
+    line-height: 1.6;
+  }
+
+  .action-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .action-note {
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
+  /* ── Nav dots ── */
+  .nav-dots {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .nav-dot:hover { background: var(--dim); }
+  .nav-dot.active { background: var(--gold); }
+
+  /* ── Print ── */
+  @media print {
+    html { scroll-snap-type: none; }
+    body { background: #0D0D0B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide {
+      width: 338mm;
+      height: 190mm;
+      max-height: none;
+      break-after: page;
+      page-break-after: always;
+    }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .nav-dots { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav dots -->
+<div class="nav-dots" id="nav-dots"></div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 1: Cover -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide cover" data-page="01 / 08">
+  <div class="cover-line"></div>
+  <div class="slide-label">Brand Movie — Project Brief & Estimate</div>
+  <div class="slide-title">へんしんバイク GWイベント<br>ブランドムービー制作</div>
+  <div style="font-size:clamp(11px,0.85vw,14px);color:var(--dim);margin-top:1.5vh;line-height:1.7;">
+    株式会社ビタミンiファクトリー ｜ 駒沢 Vitamin Factory ショールーム<br>
+    スザンヌ・ジェネリッチ × アロハアート壁画制作イベント
+  </div>
+  <div class="cover-meta">
+    <span class="pill gold">撮影 4/19〜5/3</span>
+    <span class="pill sage">約2分 / H.264</span>
+    <span class="pill">ドキュメンタリー × ブランド</span>
+    <span class="pill">2026.04.08 Draft</span>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 2: Scope -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="02 / 08">
+  <div class="slide-label">Scope Definition</div>
+  <div class="slide-title">スコープ</div>
+  <div class="slide-sub" style="max-width:100%;">納品物と制作範囲の定義</div>
+
+  <div class="two-col" style="margin-top:3vh;">
+    <div class="scope-box scope-in">
+      <h4>In Scope — 本見積もりに含む</h4>
+      <ul class="scope-list">
+        <li>ブランドムービー本編（約2分 / 16:9 / H.264）</li>
+        <li>企画・ディレクション・進行管理</li>
+        <li>撮影 3〜4日間（Taka担当）</li>
+        <li>アーティストインタビュー収録 → 本編に含む</li>
+        <li>タイムラプス素材撮影 → 本編素材として使用</li>
+        <li>ピジョンWS → 本編でしっかりフィーチャー</li>
+        <li>「月に願いを」パート → 本編ラストに軽く挿入</li>
+        <li>編集一式（オフライン → オンライン → カラグレ → テロップ → MA）</li>
+        <li>音楽ライセンス購入</li>
+        <li>交通費（鎌倉 ↔ 駒沢）</li>
+      </ul>
+    </div>
+    <div class="scope-box scope-out">
+      <h4>Out of Scope — 別途相談</h4>
+      <ul class="scope-list">
+        <li>SNS / YouTube用ショート版</li>
+        <li>タイムラプス映像の単体納品</li>
+        <li>インタビューの単体納品</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 3: Key Decisions -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="03 / 08">
+  <div class="slide-label">Key Decisions</div>
+  <div class="slide-title">映像仕様 & 制作体制</div>
+
+  <div class="three-col">
+    <div class="card">
+      <h4>映像仕様</h4>
+      <div class="card-row"><span class="card-key">尺</span><span class="card-val gold">約2分</span></div>
+      <div class="card-row"><span class="card-key">トーン</span><span class="card-val">ドキュメンタリー × ブランド</span></div>
+      <div class="card-row"><span class="card-key">テキスト</span><span class="card-val">テロップ（ナレーションなし）</span></div>
+      <div class="card-row"><span class="card-key">納品形式</span><span class="card-val">H.264</span></div>
+      <div class="card-row"><span class="card-key">納期</span><span class="card-val">TBD</span></div>
+    </div>
+    <div class="card">
+      <h4>制作体制</h4>
+      <div class="card-row"><span class="card-key">担当</span><span class="card-val gold">Taka</span></div>
+      <div class="card-row"><span class="card-key">範囲</span><span class="card-val">企画 / 撮影 / 編集 / ディレクション</span></div>
+      <div class="card-row"><span class="card-key">撮影日数</span><span class="card-val">3〜4日間</span></div>
+      <div class="card-row"><span class="card-key">拘束</span><span class="card-val">終日 or 半日（日による）</span></div>
+    </div>
+    <div class="card">
+      <h4>音楽 & 固定カメラ</h4>
+      <div class="card-row"><span class="card-key">BGM</span><span class="card-val">ライセンス楽曲を購入</span></div>
+      <div class="card-row"><span class="card-key">音楽予算</span><span class="card-val">数万円</span></div>
+      <div class="card-row"><span class="card-key">タイムラプス</span><span class="card-val">固定カメラ設置</span></div>
+      <div class="card-row"><span class="card-key">初日設置</span><span class="card-val">制作側</span></div>
+      <div class="card-row"><span class="card-key">日常管理</span><span class="card-val">渡辺さん（HB代表）</span></div>
+    </div>
+  </div>
+
+  <!-- Editing flow -->
+  <div style="margin-top:2.5vh;">
+    <div style="font-size:clamp(8px,0.6vw,10px);letter-spacing:0.2em;color:var(--dim);text-transform:uppercase;margin-bottom:1vh;">Editing Workflow</div>
+    <div class="wf-steps">
+      <div class="wf-step"><div class="wf-step-num">01</div><div class="wf-step-title">素材整理</div><div class="wf-step-desc">セレクション</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="wf-step-num">02</div><div class="wf-step-title">オフライン</div><div class="wf-step-desc">ラフカット</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step" style="border-top:2px solid var(--gold)"><div class="wf-step-num">03</div><div class="wf-step-title">FB・修正</div><div class="wf-step-desc">クライアント確認</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="wf-step-num">04</div><div class="wf-step-title">修正対応</div><div class="wf-step-desc">反映</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="wf-step-num">05</div><div class="wf-step-title">オンライン</div><div class="wf-step-desc">カラグレ・MA</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step" style="border-top:2px solid var(--sage)"><div class="wf-step-num">06</div><div class="wf-step-title">納品</div><div class="wf-step-desc">H.264</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 4: Schedule -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="04 / 08">
+  <div class="slide-label">Event & Shooting Schedule</div>
+  <div class="slide-title">イベント & 撮影スケジュール</div>
+  <div class="slide-sub" style="max-width:100%;margin-bottom:2vh;">イベント期間: 4/19〜5/3（約2週間）/ 撮影: 3〜4日間（下記イベント日程から選定）</div>
+
+  <div class="sched-row shoot">
+    <div class="sched-date">4/19<div class="day">土</div></div>
+    <div class="sched-content"><strong>壁画制作開始</strong> / 固定カメラセッティング<span class="shoot-badge">撮影 Day 1</span></div>
+  </div>
+  <div class="sched-row">
+    <div class="sched-date" style="border-left-color:var(--sage)">4/20-25<div class="day">日〜金</div></div>
+    <div class="sched-content">スザンヌ壁画制作中（固定カメラ: 渡辺さん管理）</div>
+  </div>
+  <div class="sched-row shoot">
+    <div class="sched-date">4/26<div class="day">日</div></div>
+    <div class="sched-content"><strong>壁画中盤</strong> / ミレットWS（粘土・午後・サブカット）<span class="shoot-badge">撮影 Day 2</span></div>
+  </div>
+  <div class="sched-row shoot">
+    <div class="sched-date" style="border-left-color:var(--warm)">4/28 or 29<div class="day">月 or 火祝</div></div>
+    <div class="sched-content"><strong>ピジョン指絵の具WS</strong>（1回1時間・間90分）— <span style="color:var(--gold)">映像でしっかりフィーチャー</span><span class="shoot-badge">撮影 Day 3</span></div>
+  </div>
+  <div class="sched-row tbd">
+    <div class="sched-date">5/1<div class="day">木・TBD</div></div>
+    <div class="sched-content">多摩川ロケ撮影？（未定）/ 北川さん全体写真撮影</div>
+  </div>
+  <div class="sched-row shoot">
+    <div class="sched-date">5/3<div class="day">土</div></div>
+    <div class="sched-content"><strong>公開イベント本番</strong> — 壁画完成お披露目 / ライブペイント仕上げ / 自転車教室 /「月に願いを」発表<span class="shoot-badge">撮影 Day 3 or 4</span></div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 5: Collaborators -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="05 / 08">
+  <div class="slide-label">Collaborators & Permissions</div>
+  <div class="slide-title">コラボレーター & 権利</div>
+
+  <div class="two-col" style="margin-top:2vh;">
+    <div class="card">
+      <h4>出演・コラボレーター</h4>
+      <div class="collab-row">
+        <div class="collab-avatar" style="background:rgba(232,133,90,0.15)">🎨</div>
+        <div><div class="collab-name">スザンヌ・ジェネリッチ</div><div class="collab-role">壁画制作 + インタビュー</div></div>
+      </div>
+      <div class="collab-row">
+        <div class="collab-avatar" style="background:rgba(255,209,102,0.15)">🏺</div>
+        <div><div class="collab-name">ミレットさん</div><div class="collab-role">粘土WS（4/26）— サブカット</div></div>
+      </div>
+      <div class="collab-row">
+        <div class="collab-avatar" style="background:rgba(78,205,196,0.15)">🖐️</div>
+        <div><div class="collab-name">ピジョン</div><div class="collab-role">指絵の具WS（4/28-29）— メインフィーチャー</div></div>
+      </div>
+      <div class="collab-row">
+        <div class="collab-avatar" style="background:rgba(168,230,207,0.15)">🎵</div>
+        <div><div class="collab-name">Kota</div><div class="collab-role">音楽コラボ（5/3）— 参加未確定</div></div>
+      </div>
+      <div class="collab-row">
+        <div class="collab-avatar" style="background:rgba(242,237,228,0.08)">📸</div>
+        <div><div class="collab-name">北川さん</div><div class="collab-role">全体写真（5/1）</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:clamp(8px,1vw,12px);">
+        <h4>権利処理</h4>
+        <div class="card-row"><span class="card-key">出演者の撮影許諾</span><span class="card-val" style="color:var(--warm)">渡辺さんに確認</span></div>
+        <div class="card-row"><span class="card-key">参加者の撮影同意書</span><span class="card-val" style="color:var(--warm)">渡辺さんに確認</span></div>
+        <div class="card-row"><span class="card-key">Kota楽曲</span><span class="card-val">使用しない想定</span></div>
+      </div>
+      <div class="moon-card">
+        <h3>🌙 月に願いを</h3>
+        <p>本編ラストに軽く挿入。子どもたちの未来を考えるへんしんバイクの想いとリンクさせるコピーで繋ぐ。フォーカスしすぎない。</p>
+        <div class="moon-tags">
+          <span class="moon-tag">タイムカプセル 2050</span>
+          <span class="moon-tag">映像ラストに予告的挿入</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 6: Estimate -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="06 / 08">
+  <div class="slide-label">Estimate</div>
+  <div class="slide-title">見積もり</div>
+
+  <div class="two-col" style="margin-top:1.5vh; grid-template-columns: 1.2fr 0.8fr;">
+    <div>
+      <div class="est-line">
+        <div><div class="est-label">企画・ディレクション</div><div class="est-desc">コンセプト / 絵コンテ / 進行管理 / ロケハン</div></div>
+        <div class="est-amount">¥150,000</div>
+      </div>
+      <div class="est-line">
+        <div><div class="est-label">撮影（3〜4日間）</div><div class="est-desc">カメラマン × 日数 / 機材 / 固定カメラ設置</div></div>
+        <div class="est-amount">¥300,000</div>
+      </div>
+      <div class="est-line">
+        <div><div class="est-label">インタビュー収録</div><div class="est-desc">スザンヌさん / ピンマイク等</div></div>
+        <div class="est-amount">¥50,000</div>
+      </div>
+      <div class="est-line">
+        <div><div class="est-label">編集（オフライン〜オンライン）</div><div class="est-desc">素材整理 / ラフ / 修正 / カラグレ / MA / テロップ</div></div>
+        <div class="est-amount">¥280,000</div>
+      </div>
+      <div class="est-line">
+        <div><div class="est-label">音楽ライセンス</div><div class="est-desc">映像用楽曲の購入</div></div>
+        <div class="est-amount">¥30,000</div>
+      </div>
+      <div class="est-line">
+        <div><div class="est-label">交通費</div><div class="est-desc">鎌倉 ↔ 駒沢 × 撮影日数 + 打合せ</div></div>
+        <div class="est-amount">¥20,000</div>
+      </div>
+
+      <div class="est-total">
+        <div><div class="est-total-label">合計（税込）</div></div>
+        <div>
+          <div class="est-total-amount">¥913,000</div>
+          <div class="est-total-tax">税抜 ¥830,000 + 消費税 ¥83,000</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h4>納品物</h4>
+        <div class="card-row"><span class="card-key">本編</span><span class="card-val">約2分 / H.264</span></div>
+        <div class="card-row"><span class="card-key">内容</span><span class="card-val">壁画ドキュメント + インタビュー + WS + 月予告</span></div>
+        <div class="card-row"><span class="card-key">担当</span><span class="card-val gold">Taka</span></div>
+        <div class="card-row"><span class="card-key">修正</span><span class="card-val">オフラインFB + 最終微調整</span></div>
+      </div>
+      <div class="note-box">
+        <strong>備考</strong><br>
+        ・撮影3日で収まる場合は金額調整可能<br>
+        ・SNSショート版はスコープ外（別途相談）<br>
+        ・大幅な構成変更は別途相談
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 7: Production Flow -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="07 / 08">
+  <div class="slide-label">Production Workflow</div>
+  <div class="slide-title">制作フロー</div>
+
+  <div class="wf-steps" style="margin-top:3vh;">
+    <div class="wf-step" style="border-top:2px solid var(--gold)">
+      <div class="wf-step-num">PHASE 01</div>
+      <div class="wf-step-title">企画・準備</div>
+      <div class="wf-step-desc">構成確定 / 絵コンテ承認<br>機材・スケジュール確定<br>固定カメラ準備</div>
+    </div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step" style="border-top:2px solid var(--coral)">
+      <div class="wf-step-num">PHASE 02</div>
+      <div class="wf-step-title">撮影</div>
+      <div class="wf-step-desc">4/19〜5/3<br>3〜4日間 Taka担当<br>インタビュー収録</div>
+    </div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step">
+      <div class="wf-step-num">PHASE 03</div>
+      <div class="wf-step-title">オフライン編集</div>
+      <div class="wf-step-desc">素材整理 / ラフカット<br>構成・テンポ確認<br>クライアントFB</div>
+    </div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step" style="border-top:2px solid var(--sage)">
+      <div class="wf-step-num">PHASE 04</div>
+      <div class="wf-step-title">オンライン・納品</div>
+      <div class="wf-step-desc">カラグレ / MA / テロップ<br>最終微調整<br>H.264 納品</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:3vh;">
+    <div class="card">
+      <h4>撮影日ごとのフォーカス</h4>
+      <div class="card-row"><span class="card-key">4/19（Day 1）</span><span class="card-val">壁画開始 / 固定カメラ設置 / スザンヌ作業風景</span></div>
+      <div class="card-row"><span class="card-key">4/26（Day 2）</span><span class="card-val">壁画中盤 / ミレットWS（サブカット）</span></div>
+      <div class="card-row"><span class="card-key">4/28-29</span><span class="card-val">ピジョンWS（メインフィーチャー）</span></div>
+      <div class="card-row"><span class="card-key">5/3（Final）</span><span class="card-val">完成お披露目 / 自転車教室（可能なら）/ 月プロジェクト</span></div>
+    </div>
+    <div class="card">
+      <h4>インタビュー計画</h4>
+      <div class="card-row"><span class="card-key">対象</span><span class="card-val">スザンヌ・ジェネリッチ</span></div>
+      <div class="card-row"><span class="card-key">内容</span><span class="card-val">こだわり / HBとの共鳴ポイント</span></div>
+      <div class="card-row"><span class="card-key">タイミング</span><span class="card-val">撮影日に合わせて収録</span></div>
+      <div class="card-row"><span class="card-key">使用</span><span class="card-val">本編内に挿入</span></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SLIDE 8: Next Steps -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="08 / 08">
+  <div class="slide-label">Confirmation</div>
+  <div class="slide-title">確認事項</div>
+
+  <div class="two-col" style="margin-top:3vh;">
+    <div>
+      <div style="font-size:clamp(9px,0.7vw,11px);letter-spacing:0.15em;color:var(--warm);text-transform:uppercase;margin-bottom:1.5vh;">渡辺さんへの確認事項</div>
+
+      <div class="action-item" style="border-color:rgba(255,209,102,0.3);">
+        <div class="action-dot" style="background:var(--warm);"></div>
+        <div>出演者（ミレット・ピジョン・北川さん）の撮影許諾
+          <div class="action-note">映像に出演する可能性がある旨を事前に伝達</div>
+        </div>
+      </div>
+      <div class="action-item" style="border-color:rgba(255,209,102,0.3);">
+        <div class="action-dot" style="background:var(--warm);"></div>
+        <div>参加者（特に子ども）の撮影同意書フローは主催側で用意するか？
+          <div class="action-note">制作側で準備が必要な場合はテンプレートを作成</div>
+        </div>
+      </div>
+      <div class="action-item" style="border-color:rgba(255,209,102,0.3);">
+        <div class="action-dot" style="background:var(--warm);"></div>
+        <div>自転車教室を映像に入れた方が良いか？
+          <div class="action-note">5/3に自転車教室あり。プロダクト訴求として入れるべきか渡辺さんの判断を伺いたい</div>
+        </div>
+      </div>
+      <div class="action-item" style="border-color:rgba(255,209,102,0.3);">
+        <div class="action-dot" style="background:var(--warm);"></div>
+        <div>Kotaさんの5/3参加有無
+          <div class="action-note">映像構成は楽曲不使用で進めるが、参加なら撮影対象に</div>
+        </div>
+      </div>
+    </div>
+
+    <div></div>
+  </div>
+  <div class="slide-footer">enugraph — Confidential</div>
+</div>
+
+<script>
+// ── Nav dots ──
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('nav-dots');
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.nav-dot');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = [...slides].indexOf(entry.target);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

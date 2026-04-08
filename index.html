@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storyboard v2 — henshinbike GW Brand Movie</title>
+<style>
+  :root {
+    --bg: #0D0D0B;
+    --bg2: #131311;
+    --ivory: #F2EDE4;
+    --dim: rgba(242,237,228,0.45);
+    --faint: rgba(242,237,228,0.06);
+    --border: rgba(242,237,228,0.1);
+    --gold: #E8FF4A;
+    --sage: #4ECDC4;
+    --coral: #E8855A;
+    --warm: #FFD166;
+    --green: #A8E6CF;
+  }
+
+  @page { size: 338mm 190mm; margin: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ivory);
+  }
+
+  .slide {
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+    max-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 4.5% 6%;
+    position: relative;
+    overflow: hidden;
+    break-after: page;
+    background: var(--bg);
+  }
+
+  .slide::after {
+    content: attr(data-page);
+    position: absolute;
+    bottom: 3%;
+    right: 5%;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(242,237,228,0.2);
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 3%;
+    left: 6%;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(242,237,228,0.15);
+  }
+
+  /* ── Scene header ── */
+  .scene-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 2.5vh;
+  }
+
+  .scene-num {
+    font-size: clamp(13px, 1vw, 16px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .scene-title {
+    font-size: clamp(26px, 2.6vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .scene-dur {
+    font-size: clamp(14px, 1.1vw, 17px);
+    color: var(--gold);
+    margin-left: auto;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scene-desc {
+    font-size: clamp(14px, 1.1vw, 17px);
+    color: var(--dim);
+    line-height: 1.7;
+    margin-bottom: 2vh;
+    max-width: 75%;
+  }
+
+  /* ── Shot list ── */
+  .shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    flex: 1;
+    align-content: start;
+  }
+
+  .shots.single { grid-template-columns: 1fr; max-width: 65%; }
+
+  .shot {
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .shot-tag {
+    font-size: clamp(9px, 0.7vw, 11px);
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .tag-wide     { background: rgba(78,205,196,0.12); color: var(--sage); }
+  .tag-close    { background: rgba(232,133,90,0.12); color: var(--coral); }
+  .tag-medium   { background: rgba(255,209,102,0.12); color: var(--warm); }
+  .tag-timelapse{ background: rgba(232,255,74,0.12); color: var(--gold); }
+  .tag-interview{ background: rgba(242,237,228,0.08); color: var(--ivory); }
+  .tag-title    { background: rgba(242,237,228,0.06); color: var(--dim); }
+  .tag-tracking { background: rgba(78,205,196,0.12); color: var(--sage); }
+
+  .shot-body {
+    flex: 1;
+  }
+
+  .shot-desc {
+    font-size: clamp(14px, 1.1vw, 17px);
+    line-height: 1.6;
+  }
+
+  .shot-note {
+    font-size: clamp(11px, 0.85vw, 14px);
+    color: var(--dim);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  .shot-cam {
+    font-size: clamp(10px, 0.8vw, 13px);
+    color: var(--dim);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  /* ── Audio / Telop bar ── */
+  .meta-bar {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 1.5vh;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-block {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .meta-icon {
+    font-size: clamp(11px, 0.85vw, 14px);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .meta-label {
+    font-size: clamp(10px, 0.8vw, 13px);
+    letter-spacing: 0.12em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .meta-text {
+    font-size: clamp(12px, 0.95vw, 15px);
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* ── Cover ── */
+  .cover { justify-content: flex-end; padding-bottom: 7%; }
+
+  .cover-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--sage) 50%, var(--coral) 100%);
+  }
+
+  .cover-label {
+    font-size: clamp(11px, 0.9vw, 14px);
+    letter-spacing: 0.25em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1.5vh;
+  }
+
+  .cover-title {
+    font-size: clamp(32px, 3.2vw, 52px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1.5vh;
+  }
+
+  .cover-sub {
+    font-size: clamp(14px, 1.1vw, 17px);
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .cover-pills {
+    display: flex;
+    gap: 8px;
+    margin-top: 2vh;
+  }
+
+  .pill {
+    font-size: clamp(10px, 0.8vw, 13px);
+    letter-spacing: 0.1em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+  }
+  .pill.gold { border-color: var(--gold); color: var(--gold); }
+  .pill.sage { border-color: var(--sage); color: var(--sage); }
+
+  /* ── Timeline overview ── */
+  .tl-bar {
+    display: flex;
+    gap: 2px;
+    margin-top: 2vh;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .tl-seg {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  /* ── Shot thumbnail ── */
+  .shot-thumb {
+    position: relative;
+    width: clamp(100px, 8.5vw, 130px);
+    min-width: clamp(100px, 8.5vw, 130px);
+    aspect-ratio: 16/9;
+    background: #ffffff;
+    border: 1px solid rgba(242,237,228,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .shot-thumb svg,
+  .shot-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .shot-thumb svg line,
+  .shot-thumb svg path,
+  .shot-thumb svg rect,
+  .shot-thumb svg circle,
+  .shot-thumb svg ellipse,
+  .shot-thumb svg polyline {
+    stroke: rgba(242,237,228,0.35);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .shot-thumb svg .f {
+    fill: rgba(242,237,228,0.05);
+  }
+  .shot > .shot-tag {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    margin: 0;
+    z-index: 1;
+  }
+
+  /* ── Nav dots ── */
+  .nav-dots {
+    position: fixed;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .nav-dot:hover { background: var(--dim); }
+  .nav-dot.active { background: var(--gold); }
+
+  @media print {
+    html { scroll-snap-type: none; }
+    body { background: #0D0D0B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .slide { width: 338mm; height: 190mm; max-height: none; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .nav-dots { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-dots" id="nav-dots"></div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- COVER -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide cover" data-page="01 / 09">
+  <div class="cover-line"></div>
+  <div class="cover-label">Storyboard — 字コンテ v2</div>
+  <div class="cover-title">へんしんバイク GWイベント<br>ブランドムービー 絵コンテ</div>
+  <div class="cover-sub">
+    約2分 ｜ ドキュメンタリー × ブランド ｜ 全7シーン<br>
+    撮影: 4/19〜5/3（3〜4日間）｜ Taka担当
+  </div>
+  <div class="cover-pills">
+    <span class="pill gold">字コンテ — ビジュアル後入れ</span>
+    <span class="pill sage">Draft 2026.04.08</span>
+    <span class="pill">Confidential</span>
+  </div>
+
+  <!-- Timeline bar -->
+  <div style="margin-top:3vh;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(10px,0.8vw,13px);color:var(--dim);margin-bottom:6px;">
+      <span style="font-size:clamp(9px,0.7vw,11px);color:rgba(242,237,228,0.3);letter-spacing:0.05em;">※ 尺は目安 — 撮影素材に応じて調整</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:clamp(10px,0.8vw,13px);color:var(--dim);margin-bottom:6px;">
+      <span>0:00</span><span>0:15</span><span>0:35</span><span>1:00</span><span>1:20</span><span>1:40</span><span>1:55</span><span>2:05</span>
+    </div>
+    <div class="tl-bar">
+      <div class="tl-seg" style="flex:15;background:var(--ivory);opacity:0.3;"></div>
+      <div class="tl-seg" style="flex:20;background:var(--coral);"></div>
+      <div class="tl-seg" style="flex:25;background:var(--warm);"></div>
+      <div class="tl-seg" style="flex:25;background:var(--sage);"></div>
+      <div class="tl-seg" style="flex:15;background:var(--green);"></div>
+      <div class="tl-seg" style="flex:15;background:var(--gold);"></div>
+      <div class="tl-seg" style="flex:10;background:var(--ivory);opacity:0.2;"></div>
+    </div>
+    <div style="display:flex;margin-top:8px;font-size:clamp(10px,0.8vw,13px);color:var(--dim);">
+      <span style="flex:15;color:rgba(242,237,228,0.4);">1. OPENING</span>
+      <span style="flex:20;color:var(--coral);">2. 壁画の始まり</span>
+      <span style="flex:25;color:var(--warm);">3. スザンヌの声</span>
+      <span style="flex:25;color:var(--sage);">4. ピジョンWS</span>
+      <span style="flex:15;color:var(--green);">5. 会場の熱気</span>
+      <span style="flex:15;color:var(--gold);">6. 壁画の前で</span>
+      <span style="flex:10;color:rgba(242,237,228,0.35);">7. CLOSING</span>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 1: OPENING -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="02 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(242,237,228,0.06);color:var(--dim);">Scene 01</div>
+    <div class="scene-title">OPENING — 白い壁</div>
+    <div class="scene-dur">0:00 → 0:15（15秒）</div>
+  </div>
+  <div class="scene-desc">まだ何も描かれていない白い壁。静寂。空間のディテール。スザンヌが現れ、最初のひと筆を入れる。タイトル表示。「何かが始まる」予感。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb">
+        <img src="img/s01-01.jpg" alt="ショールーム外観">
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc">駒沢ショールーム外観</div>
+        <div class="shot-note">朝の光。建物全体 or 入口。場所の紹介</div>
+        <div class="shot-cam">三脚 / 自然光</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">空間のディテール</div>
+        <div class="shot-note">ドアノブ、看板、光の差し込み、床の質感</div>
+        <div class="shot-cam">手持ち / スローで数カット</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">白い壁のフルショット</div>
+        <div class="shot-note">まだ何も描かれていない状態。静かな画。この壁がこれから変わる</div>
+        <div class="shot-cam">三脚 / 正面から</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁の白い表面</div>
+        <div class="shot-note">テクスチャーが見えるくらい寄る。マクロ的に</div>
+        <div class="shot-cam">手持ち or 三脚 / 浅いDOF</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">タイトルテロップ</div>
+        <div class="shot-note">壁のショットの上にタイトルをオーバーレイ。「へんしんバイク × スザンヌ」</div>
+        <div class="shot-cam">編集時に合成</div>
+      </div>
+      <span class="shot-tag tag-title">Title</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌが壁に向き合う</div>
+        <div class="shot-note">後ろ姿 or 横顔。壁を見つめる。筆を手に取る</div>
+        <div class="shot-cam">手持ち / ゆっくり近づく</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌの手 — 筆が壁に触れる</div>
+        <div class="shot-note">筆を握る手元 → 壁に最初の色がのる。白い壁が変わり始める瞬間</div>
+        <div class="shot-cam">手持ち / 浅いDOF / スロー推奨</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">環境音（静寂・風・鳥）→ 音楽がゆっくり立ち上がる</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">撮影日: 4/19（Day 1）。朝の光が入る時間帯がベスト</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 2: 壁画が育っていく -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="03 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(232,133,90,0.12);color:var(--coral);">Scene 02</div>
+    <div class="scene-title">壁画が育っていく</div>
+    <div class="scene-dur">0:15 → 0:35（20秒）</div>
+  </div>
+  <div class="scene-desc">日が経つごとに壁画に色が増えていく。タイムラプスと手持ちの寄りカットで、制作のプロセスを見せる。スザンヌのダイナミックな作業風景。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画の進行（固定カメラ）</div>
+        <div class="shot-note">4/19〜5/3の数日分を凝縮。白い壁 → 色が広がる → 完成に近づく</div>
+        <div class="shot-cam">固定カメラ / 渡辺さん日常管理</div>
+      </div>
+      <span class="shot-tag tag-timelapse">Timelapse</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌの手元 — 筆さばき</div>
+        <div class="shot-note">筆が壁に色をのせていく。大胆なストローク。鮮やかなピンク、ブルー、グリーンが広がる</div>
+        <div class="shot-cam">手持ち / 近距離で追う</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌの横顔・表情</div>
+        <div class="shot-note">集中した真剣な顔、ふと笑顔になる瞬間。ピンクの眼鏡、タトゥー、オーバーオール — キャラクターが伝わるカット</div>
+        <div class="shot-cam">手持ち / 横から / 浅いDOF</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">画材・道具のカット</div>
+        <div class="shot-note">カラフルなペンキ缶が並ぶ、何本もの筆、絵の具がついた手。アトリエ感</div>
+        <div class="shot-cam">手持ち / 浅いDOF / 数カット</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁全体 — 日ごとの変化</div>
+        <div class="shot-note">撮影日ごとに同じアングルから壁全体を撮る。進行がわかるように</div>
+        <div class="shot-cam">三脚 / 固定アングル（タイムラプスと同ポジ推奨）</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌ越しの壁画 / 一歩引いて全体を眺める</div>
+        <div class="shot-note">肩越しに広がるアート。ふと手を止めて全体を確認する瞬間。アーティストの視点</div>
+        <div class="shot-cam">手持ち / スザンヌの背後〜斜め後ろ</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">音楽がビルドアップ。テンポが上がり始める。制作音（筆音、ペンキ缶）をミックス</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">手持ちの寄りカットは4/19, 4/26の撮影日に集中的に撮る</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 3: スザンヌの声 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="04 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(255,209,102,0.12);color:var(--warm);">Scene 03</div>
+    <div class="scene-title">スザンヌの声</div>
+    <div class="scene-dur">0:35 → 1:00（25秒）</div>
+  </div>
+  <div class="scene-desc">インタビューを軸にしたシーン。スザンヌのこだわり、アートへの想い、へんしんバイクとの共鳴ポイントを語ってもらう。インタビュー音声の上にB-Roll（制作映像）を重ねる構成。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌ インタビュー — バストショット</div>
+        <div class="shot-note">完成途中の壁画を背景に。自然光。リラックスした雰囲気で</div>
+        <div class="shot-cam">三脚 / ピンマイク / 浅いDOF / 壁画ボケ背景</div>
+      </div>
+      <span class="shot-tag tag-interview">Interview</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌ インタビュー — 寄り</div>
+        <div class="shot-note">表情のクローズアップ。感情が見える距離感</div>
+        <div class="shot-cam">三脚 or 手持ち / 別アングル</div>
+      </div>
+      <span class="shot-tag tag-interview">Interview</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">手元のクローズアップ（音声に重ねる）</div>
+        <div class="shot-note">インタビュー音声の上に制作映像を重ねる。筆を持つ手、ペンキ缶の色彩、壁に色がのる瞬間</div>
+        <div class="shot-cam">手持ち / インタビューとは別タイミングで撮影可</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画のディテール</div>
+        <div class="shot-note">完成に近づく壁画の部分的なクローズアップ。色彩、筆跡、テクスチャー</div>
+        <div class="shot-cam">手持ち / ゆっくりパン or スライド</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌの全身 — 制作中の姿</div>
+        <div class="shot-note">没頭して描いている姿。インタビュー音声と映像のコントラスト</div>
+        <div class="shot-cam">手持ち / 自然な距離感</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画を見つめる子どもの顔</div>
+        <div class="shot-note">口を開けて見ている子ども。驚きの表情。スザンヌの言葉と子どもの反応が重なる</div>
+        <div class="shot-cam">手持ち / 望遠気味で自然に</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌが笑顔で語る瞬間</div>
+        <div class="shot-note">「変身」について語る場面。感情のピーク。このカットが全体のキーになる可能性</div>
+        <div class="shot-cam">三脚 / ピンマイク</div>
+      </div>
+      <span class="shot-tag tag-interview">Interview</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">スザンヌと壁画の全景</div>
+        <div class="shot-note">引きで「人とアート」の関係を見せる。シーンの締め</div>
+        <div class="shot-cam">三脚 / ワイド</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">インタビュー音声がメイン。BGMは控えめに下げる。制作音を少し残す</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">インタビューは英語で収録 → 日本語字幕を挿入</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 4: ピジョンWS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="05 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(78,205,196,0.12);color:var(--sage);">Scene 04</div>
+    <div class="scene-title">ピジョン — 親子の手</div>
+    <div class="scene-dur">1:00 → 1:25（25秒）</div>
+  </div>
+  <div class="scene-desc">ピジョンの指絵の具ワークショップ。子どもの手、親の手、色が混ざっていく。「手で触れて変わる」体験はへんしんバイクの「変身」と重なる。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">WSスペースの全景</div>
+        <div class="shot-note">セッティングされた机、絵の具、紙。これから始まる空気感</div>
+        <div class="shot-cam">三脚 or 手持ち / ワイド</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">子どもの手が絵の具に触れる瞬間</div>
+        <div class="shot-note">初めて触る躊躇 → 触れた瞬間の表情変化。決定的カット</div>
+        <div class="shot-cam">手持ち / マクロ寄り / スロー推奨</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">親の手が子どもの手をガイド</div>
+        <div class="shot-note">大きな手と小さな手が重なる。色がついた指。親子の絆</div>
+        <div class="shot-cam">手持ち / 手元にフォーカス</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">親子の横顔 — 並んで作業</div>
+        <div class="shot-note">同じ目線の高さで。二人の表情が見える構図</div>
+        <div class="shot-cam">手持ち / 横位置 / 浅いDOF</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">指で描かれていく模様</div>
+        <div class="shot-note">紙の上に色が広がる。指の跡、色の混ざり。プロセスの美しさ</div>
+        <div class="shot-cam">手持ち / 真上から or 斜めから</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">子どもの表情 — 集中・笑顔・驚き</div>
+        <div class="shot-note">没頭している顔、できた！の笑顔、色が混ざった驚き</div>
+        <div class="shot-cam">手持ち / 望遠気味で自然に</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">完成した作品を見せる子ども</div>
+        <div class="shot-note">得意げに作品を持ち上げる or 親に見せる。達成感</div>
+        <div class="shot-cam">手持ち / 子どもの目線に合わせて低く</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">複数の親子が並ぶ風景</div>
+        <div class="shot-note">ワークショップ全体の賑わい。様々な家族が同時に制作している</div>
+        <div class="shot-cam">手持ち / 引きで全体を</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">音楽が柔らかく。笑い声・会話を自然音としてミックス</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">撮影日: 4/28 or 29。1時間セッション × 複数回あるので2回目以降でベストカット狙い</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 5: 会場の熱気 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="06 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(168,230,207,0.12);color:var(--green);">Scene 05</div>
+    <div class="scene-title">会場に広がる色と笑顔</div>
+    <div class="scene-dur">1:25 → 1:40（15秒）</div>
+  </div>
+  <div class="scene-desc">モンタージュ。テンポよくカットを繋いで、イベント全体の熱気を凝縮する。ミレットWSはここでサブカットとして入れる。エネルギーのピーク。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">会場全体の俯瞰</div>
+        <div class="shot-note">高い位置から見下ろす。人の動き、色彩、活気が一目でわかる</div>
+        <div class="shot-cam">脚立 or 2階から / 広角</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">走り回る子どもを追う</div>
+        <div class="shot-note">動きのあるカット。子どもの目線の低さで追いかける</div>
+        <div class="shot-cam">手持ち / ジンバル / 低い位置で</div>
+      </div>
+      <span class="shot-tag tag-tracking">Tracking</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">色のついた手のアップ</div>
+        <div class="shot-note">絵の具で染まった子どもの手。カラフルさが伝わるように</div>
+        <div class="shot-cam">手持ち / マクロ</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">ミレットWS — 粘土制作</div>
+        <div class="shot-note">親子が粘土キャラクターを作っている様子。サブカットとして1-2カット</div>
+        <div class="shot-cam">手持ち / 自然な距離感</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">様々な家族の笑顔モンタージュ</div>
+        <div class="shot-note">テンポよく切り替え。多様な家族。笑っている顔を連続で</div>
+        <div class="shot-cam">手持ち / 望遠で自然に拾う</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画 × 会場の活気を1フレームに</div>
+        <div class="shot-note">背景にスザンヌの壁画、手前にイベントの賑わい。空間全体の色彩</div>
+        <div class="shot-cam">手持ち / 広角 / ゆっくりパン</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">音楽テンポアップ。賑やかな環境音をミックス。エネルギーのピーク</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">ミレットWSは4/26、他のカットは5/3がメイン。複数日の素材を混ぜてモンタージュ</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 6: 壁画完成 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="07 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(232,255,74,0.12);color:var(--gold);">Scene 06</div>
+    <div class="scene-title">壁画の前で</div>
+    <div class="scene-dur">1:40 → 1:55（15秒）</div>
+  </div>
+  <div class="scene-desc">5/3公開イベント。仕上がりに近づいた壁画の前に人が集まっていく。色彩に包まれた空間で、家族が過ごしている。OPENINGの白い壁との対比。</div>
+
+  <div class="shots">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画のフルショット</div>
+        <div class="shot-note">OPENINGの白い壁と同アングル。色彩で埋め尽くされた壁。Before/Afterの対比</div>
+        <div class="shot-cam">三脚 / OPENINGと同ポジション</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画の前のスザンヌ</div>
+        <div class="shot-note">自分の作品の前に立つスザンヌ。笑顔。誇らしさ</div>
+        <div class="shot-cam">手持ち / 自然な距離感</div>
+      </div>
+      <span class="shot-tag tag-medium">Medium</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画を見る人たちのリアクション</div>
+        <div class="shot-note">子どもの歓声、親の笑顔、壁画を見上げる表情。自然な反応を拾う</div>
+        <div class="shot-cam">手持ち / 望遠で自然に</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画の前に家族が集まる・記念撮影</div>
+        <div class="shot-note">色彩豊かな壁画をバックに笑顔の家族。自然に集まっていく様子</div>
+        <div class="shot-cam">手持ち / 少し引いて</div>
+      </div>
+      <span class="shot-tag tag-wide">Wide</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">壁画を見上げる子ども</div>
+        <div class="shot-note">壁画を指差したり、親に「あれ見て！」と話しかける。純粋な反応</div>
+        <div class="shot-cam">手持ち / 望遠 / 子どもの目線</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">音楽が感動的なクライマックスへ。歓声・賑わいを自然音として残す</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">撮影日: 5/3。壁画の仕上がり具合はタイミング次第。完成前でもOK — 色彩で埋まった壁と人が映っていれば成立する</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCENE 7: CLOSING -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="08 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(242,237,228,0.06);color:var(--dim);">Scene 07</div>
+    <div class="scene-title">CLOSING — 月に願いを</div>
+    <div class="scene-dur">1:55 → 2:05（10秒）</div>
+  </div>
+  <div class="scene-desc">余韻。子どもたちの未来を想うへんしんバイクの想いと「月に願いを」プロジェクトをコピーで軽く繋ぐ。ブランドロゴで締める。</div>
+
+  <div class="shots" style="max-width:65%;">
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">子どもの笑顔 — 余韻カット</div>
+        <div class="shot-note">壁画やWSで見た幸せな瞬間のベストカット。映像のラストの余韻</div>
+        <div class="shot-cam">手持ち / スロー / 望遠</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">月プロジェクト関連カット（5/3に撮影）</div>
+        <div class="shot-note">集合写真のシーン、メッセージボード、チェキ写真など。軽く1-2カット</div>
+        <div class="shot-cam">手持ち / 自然に拾う</div>
+      </div>
+      <span class="shot-tag tag-close">Close-up</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">コピーテロップ</div>
+        <div class="shot-note">子どもの未来 × HBの想いを繋ぐ一文。月プロジェクトを匂わせる</div>
+        <div class="shot-cam">編集時にデザイン</div>
+      </div>
+      <span class="shot-tag tag-title">Title</span>
+    </div>
+    <div class="shot">
+      <div class="shot-thumb"></div>
+      <div class="shot-body">
+        <div class="shot-desc">ブランドロゴ</div>
+        <div class="shot-note">へんしんバイクロゴ。余韻を残してフェードアウト</div>
+        <div class="shot-cam">編集時にデザイン</div>
+      </div>
+      <span class="shot-tag tag-title">Title</span>
+    </div>
+  </div>
+
+  <div class="meta-bar" style="margin-top:auto;">
+    <div class="meta-block">
+      <div class="meta-icon">🎵</div>
+      <div><div class="meta-label">Audio</div><div class="meta-text">音楽がフェードアウト。最後は静かに余韻を残す</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">Note</div><div class="meta-text">コピーの内容は別途検討。コンセプトが固まったら反映</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SHOT SUMMARY -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="slide" data-page="09 / 09">
+  <div class="scene-head">
+    <div class="scene-num" style="background:rgba(242,237,228,0.06);color:var(--dim);">Reference</div>
+    <div class="scene-title">撮影日別カットリスト</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;align-content:start;">
+    <div class="shot" style="flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="shot-tag tag-close" style="font-size:clamp(11px,0.9vw,14px);">Day 1 — 4/19</div>
+        <span style="font-size:clamp(14px,1.1vw,17px);font-weight:600;">壁画開始 + カメラ設置</span>
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc" style="line-height:1.9;">
+          ショールーム外観・空間ディテール<br>
+          白い壁のフルショット（BEFORE）<br>
+          壁の白い表面テクスチャー<br>
+          スザンヌ登場 → 壁に向き合う → 筆が壁に触れる<br>
+          手元クローズアップ各種<br>
+          固定カメラ設置<br>
+          画材（ペンキ缶・筆）のディテールカット
+        </div>
+      </div>
+    </div>
+
+    <div class="shot" style="flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="shot-tag tag-close" style="font-size:clamp(11px,0.9vw,14px);">Day 2 — 4/26</div>
+        <span style="font-size:clamp(14px,1.1vw,17px);font-weight:600;">壁画中盤 + ミレットWS</span>
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc" style="line-height:1.9;">
+          壁画フルショット（中盤の進行記録）<br>
+          スザンヌの手持ち寄りカット各種<br>
+          スザンヌ横顔・集中表情<br>
+          スザンヌ越しの壁画<br>
+          <strong>スザンヌ インタビュー収録</strong><br>
+          ミレットWS（粘土・1-2カット）<br>
+          壁画を見る子どもの反応<br>
+          壁画ディテール（色彩・テクスチャー）
+        </div>
+      </div>
+    </div>
+
+    <div class="shot" style="flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="shot-tag tag-close" style="font-size:clamp(11px,0.9vw,14px);">Day 3 — 4/28 or 29</div>
+        <span style="font-size:clamp(14px,1.1vw,17px);font-weight:600;">ピジョンWS</span>
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc" style="line-height:1.9;">
+          WSスペース全景<br>
+          子どもの手が絵の具に触れる瞬間<br>
+          親子の手が重なるカット<br>
+          横顔（親子並び）<br>
+          指で描かれる模様・ディテール<br>
+          子どもの表情リアクション<br>
+          作品を見せる子ども<br>
+          WS全体の賑わい（引き）
+        </div>
+      </div>
+    </div>
+
+    <div class="shot" style="flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="shot-tag tag-close" style="font-size:clamp(11px,0.9vw,14px);">Day 3 or 4 — 5/3</div>
+        <span style="font-size:clamp(14px,1.1vw,17px);font-weight:600;">公開イベント本番</span>
+      </div>
+      <div class="shot-body">
+        <div class="shot-desc" style="line-height:1.9;">
+          壁画のフルショット（AFTER・OPENINGと同ポジ）<br>
+          壁画の前のスザンヌ<br>
+          壁画を見る人たちのリアクション<br>
+          壁画前の家族記念撮影<br>
+          会場全体の俯瞰・賑わい<br>
+          走り回る子ども（トラッキング）<br>
+          月プロジェクト関連カット<br>
+          子どもの笑顔（CLOSINGの余韻用）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">前後の対比</div><div class="meta-text">白い壁（4/19）→ 完成した壁画（5/3）を同アングルで撮る。映像の構造的な柱になる</div></div>
+    </div>
+    <div class="meta-block">
+      <div class="meta-icon">💡</div>
+      <div><div class="meta-label">スロー推奨カット</div><div class="meta-text">最初のひと筆 / 子どもの手が絵の具に触れる瞬間 / 笑顔リアクション</div></div>
+    </div>
+  </div>
+  <div class="slide-footer">enugraph — henshinbike storyboard v2</div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('nav-dots');
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.nav-dot');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = [...slides].indexOf(entry.target);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
