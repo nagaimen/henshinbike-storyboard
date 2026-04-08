@@ -6,17 +6,17 @@
 <title>Brief — henshinbike GW Brand Movie</title>
 <style>
   :root {
-    --bg: #0D0D0B;
-    --bg2: #131311;
-    --ivory: #F2EDE4;
-    --dim: rgba(242,237,228,0.45);
-    --faint: rgba(242,237,228,0.06);
-    --border: rgba(242,237,228,0.1);
-    --gold: #E8FF4A;
-    --sage: #4ECDC4;
-    --coral: #E8855A;
-    --warm: #FFD166;
-    --green: #A8E6CF;
+    --bg: #FAFAF8;
+    --bg2: #F0EEEB;
+    --ivory: #1A1A18;
+    --dim: rgba(26,26,24,0.45);
+    --faint: rgba(26,26,24,0.04);
+    --border: rgba(26,26,24,0.1);
+    --gold: #B8A000;
+    --sage: #2A9D8F;
+    --coral: #D4643A;
+    --warm: #C9940A;
+    --green: #3DAA8C;
   }
 
   @page {
@@ -71,7 +71,7 @@
     left: 7%;
     font-size: 9px;
     letter-spacing: 0.1em;
-    color: rgba(242,237,228,0.2);
+    color: rgba(26,26,24,0.2);
   }
 
   /* ── Typography ── */
@@ -84,7 +84,7 @@
   }
 
   .slide-title {
-    font-size: clamp(24px, 2.6vw, 40px);
+    font-size: clamp(32px, 3.2vw, 52px);
     font-weight: 700;
     line-height: 1.35;
     letter-spacing: -0.01em;
@@ -92,7 +92,7 @@
   }
 
   .slide-sub {
-    font-size: clamp(12px, 0.95vw, 15px);
+    font-size: clamp(14px, 1.1vw, 17px);
     color: var(--dim);
     line-height: 1.7;
     max-width: 60%;
@@ -194,7 +194,7 @@
   }
 
   .scope-out {
-    background: rgba(242,237,228,0.02);
+    background: rgba(26,26,24,0.02);
     border: 1px solid var(--border);
   }
 
@@ -306,8 +306,8 @@
 
   /* ── Moon ── */
   .moon-card {
-    background: linear-gradient(135deg, #0a0f1a 0%, #111827 100%);
-    border: 1px solid rgba(255,215,0,0.2);
+    background: linear-gradient(135deg, #E8E6E0 0%, #F0EEEB 100%);
+    border: 1px solid rgba(180,160,0,0.25);
     border-radius: 14px;
     padding: clamp(16px, 1.8vw, 28px);
     position: relative;
@@ -322,20 +322,20 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(180,160,0,0.08) 0%, transparent 70%);
   }
 
   .moon-card h3 {
     font-size: clamp(15px, 1.2vw, 19px);
     font-weight: 700;
     margin-bottom: 1vh;
-    color: #FFD700;
+    color: var(--warm);
   }
 
   .moon-card p {
     font-size: clamp(10px, 0.75vw, 12px);
     line-height: 1.8;
-    color: rgba(255,255,255,0.55);
+    color: rgba(26,26,24,0.55);
   }
 
   .moon-tags { display: flex; gap: 6px; margin-top: 1.5vh; flex-wrap: wrap; }
@@ -344,8 +344,8 @@
     font-size: clamp(10px, 0.75vw, 12px);
     padding: 3px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(255,215,0,0.3);
-    color: rgba(255,215,0,0.7);
+    border: 1px solid rgba(180,160,0,0.35);
+    color: rgba(180,160,0,0.8);
     letter-spacing: 0.08em;
   }
 
@@ -526,7 +526,7 @@
   /* ── Print ── */
   @media print {
     html { scroll-snap-type: none; }
-    body { background: #0D0D0B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: #FAFAF8 !important; }
     .slide {
       width: 338mm;
       height: 190mm;
@@ -715,7 +715,7 @@
         <div><div class="collab-name">Kota</div><div class="collab-role">音楽コラボ（5/3）— 参加未確定</div></div>
       </div>
       <div class="collab-row">
-        <div class="collab-avatar" style="background:rgba(242,237,228,0.08)">📸</div>
+        <div class="collab-avatar" style="background:rgba(26,26,24,0.06)">📸</div>
         <div><div class="collab-name">北川さん</div><div class="collab-role">全体写真（5/1）</div></div>
       </div>
     </div>
@@ -724,7 +724,6 @@
         <h4>権利処理</h4>
         <div class="card-row"><span class="card-key">出演者の撮影許諾</span><span class="card-val" style="color:var(--warm)">渡辺さんに確認</span></div>
         <div class="card-row"><span class="card-key">参加者の撮影同意書</span><span class="card-val" style="color:var(--warm)">渡辺さんに確認</span></div>
-        <div class="card-row"><span class="card-key">Kota楽曲</span><span class="card-val">使用しない想定</span></div>
       </div>
       <div class="moon-card">
         <h3>🌙 月に願いを</h3>
